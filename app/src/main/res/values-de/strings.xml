@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Payrexx Tap To Pay ECR Demo</string>
+    <string name="hint_amount">Betrag</string>
+    <string name="hint_tip_amount">Trinkgeld Betrag</string>
+    <string name="hint_order_reference">Bestell Referenz</string>
+    <string name="start_button">Bestätigen</string>
+</resources>
