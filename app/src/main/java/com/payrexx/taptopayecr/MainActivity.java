@@ -16,7 +16,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.gson.Gson;
 import com.payrexx.taptopayecr.dto.ActionDto;
 import com.payrexx.taptopayecr.dto.Dto;
-import com.payrexx.taptopayecr.dto.Operation;
 import com.payrexx.taptopayecr.dto.SaleDataDTO;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 dataDto.order_reference = orderReferenceInput.getText().toString();
 
                 ActionDto actionDto = new ActionDto();
-                actionDto.operation = Operation.Sale;
+                actionDto.operation = "sale";
                 actionDto.data = dataDto;
 
                 Dto dto = new Dto();
