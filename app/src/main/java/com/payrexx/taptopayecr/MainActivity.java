@@ -2,7 +2,6 @@ package com.payrexx.taptopayecr;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,17 +37,18 @@ public class MainActivity extends AppCompatActivity {
                 EditText amountInput = findViewById(R.id.Amount);
                 EditText amountTipInput = findViewById(R.id.TipAmount);
                 EditText orderReferenceInput = findViewById(R.id.OrderReference);
+                Gson gson = new Gson();
 
                 SaleDataDTO dataDto = new SaleDataDTO();
                 try {
-                    dataDto.amount = Integer.parseInt(amountInput.getText().toString());
+                    dataDto.amount = Float.parseFloat(amountInput.getText().toString());
                 } catch (NumberFormatException e) {
-                    dataDto.amount = 0;
+                    dataDto.amount = 0f;
                 }
                 try {
-                    dataDto.tip = Integer.parseInt(amountTipInput.getText().toString());
+                    dataDto.tip = Float.parseFloat(amountTipInput.getText().toString());
                 } catch (NumberFormatException e) {
-                    dataDto.tip = 0;
+                    dataDto.tip = 0f;
                 }
                 dataDto.order_reference = orderReferenceInput.getText().toString();
 
@@ -57,14 +57,19 @@ public class MainActivity extends AppCompatActivity {
                 actionDto.data = dataDto;
 
                 Dto dto = new Dto();
-                dto.payload = actionDto;
+                // important: Payload needs to be a json object STRING
+                dto.payload = gson.toJson(actionDto);
 
-                Gson gson = new Gson();
-                String json = gson.toJson(dto);
-                Log.d("Payrexx Tap2Pay ECR", json);
+
+                String payload = gson.toJson(dto);
+                // Payload will look like this:
+                // {
+                //     "payload": "{\"data\":{\"amount\":9,\"order_reference\":\"Test\",\"show_result\":true,\"tip\":1},\"operation\":\"sale\"}",
+                //     "signature": ""
+                // }
 
                 Intent intent = new Intent("com.payrexx.taptopay.SOFTPOS");
-                intent.putExtra("com.payrexx.taptopay.CONFIGURATION", json);
+                intent.putExtra("com.payrexx.taptopay.CONFIGURATION", payload);
                 startActivity(intent);
             }
         });
